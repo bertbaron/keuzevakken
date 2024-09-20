@@ -1,0 +1,9 @@
+.idea
+.vscode
+venv
+data
+logs
+.DS_Store
+__pycache__
+Resultaat*.xlsx
+backup
