@@ -9,3 +9,4 @@ Resultaat*.xlsx
 backup
 build
 dist
+*.spec
