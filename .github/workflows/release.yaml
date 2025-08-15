@@ -84,8 +84,6 @@ jobs:
       - name: Package
         shell: bash
         run: python ".github/workflows/src/package.py"
-        env:
-          TARGET: ${{ matrix.TARGET }}
 
       - name: List dist contents after package
         shell: bash
@@ -110,7 +108,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_release_details.outputs.upload_url }}
-          asset_name: keuzevakken-${{ matrix.TARGET }}.zip
+          asset_name: keuzevakken.zip
           asset_path: ./dist/keuzevakken.zip
           asset_content_type: application/zip
 
