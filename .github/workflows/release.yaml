@@ -34,6 +34,8 @@ jobs:
 
   build_and_publish:
     name: Build and publish executable applications for multiple OSs
+    permissions:
+      contents: write
     needs: create_release
     runs-on: ${{ matrix.os }}
     strategy:
@@ -41,6 +43,11 @@ jobs:
         include:
           - os: ubuntu-latest
             TARGET: linux
+            SUFFIX: ""
+          - os: windows-latest
+            TARGET: windows
+            SUFFIX: ".exe"
+
 #            ARTIFACT_NAME: hello_linux.zip
 #            ARTIFACT_PATH: './dist/hello-world/'
 #            ARTIFACT_MIME: application/zip
@@ -70,21 +77,33 @@ jobs:
 #          upload_exe_with_name: 'keuzevakken-${{ matrix.os }}'
           options: --onefile, --name "keuzevakken", --windowed
 
-
       - name: List dist contents
         shell: bash
         run: |
           echo "Contents of dist directory:"
-          ls -l dist
-          echo "Contents of dist/keuzevakken directory:"
-          ls -l dist/keuzevakken
+          ls -l ./dist
+
+      - name: Load previously uploaded release URL
+        uses: actions/download-artifact@v3
+        with:
+          name: release_url
 
       - name: Get release URL
         id: get_release_details
         shell: bash
         run: |
           url=`cat release_url.txt`
-          echo ::set-output name=upload_url::$url        
+          echo ::set-output name=upload_url::$url
+
+      - name: Publish release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_release_details.outputs.upload_url }}
+          asset_name: keyzevakken-${{ matrix.TARGET }}
+          asset_path: ./dist/keuzevakken${{ matrix.SUFFIX }}
+          asset_content_type: application/octet-stream
 
 #      - name: Publish release asset
 #        uses: actions/upload-release-asset@v1
