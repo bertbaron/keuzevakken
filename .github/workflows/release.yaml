@@ -42,7 +42,7 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            TARGET: linux
+            TARGET: linux-amd64
             SUFFIX: ""
           - os: windows-latest
             TARGET: windows
@@ -69,7 +69,7 @@ jobs:
 #              7z a hello_windows.zip .\dist\hello-world\*
     steps:
       - name: Create Executable
-        uses: sayyid5416/pyinstaller@v1
+        uses: sayyid5416/pyinstaller@v1.2.0
         with:
           python_ver: '3.12'
           spec: 'app.py'
@@ -101,7 +101,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_release_details.outputs.upload_url }}
-          asset_name: keyzevakken-${{ matrix.TARGET }}
+          asset_name: keuzevakken-${{ matrix.TARGET }}
           asset_path: ./dist/keuzevakken${{ matrix.SUFFIX }}
           asset_content_type: application/octet-stream
 
