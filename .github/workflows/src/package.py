@@ -42,7 +42,7 @@ def create_archive(platform):
     print(f"Creating archive for {platform}")
 
     if platform == Platform.WINDOWS:
-        run_cmd(['7z', 'a', f'keuzevakken.zip', 'dist\\*'], cwd='dist')
+        run_cmd(['powershell', '-Command', 'Compress-Archive -Path .\\* -DestinationPath keuzevakken.zip'], cwd='dist')
     else:
         if platform == Platform.MACOS and os.path.exists('dist/keuzevakken'):
             run_cmd(['rm', '-rf', 'dist/keuzevakken'])

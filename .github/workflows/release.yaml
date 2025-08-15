@@ -43,28 +43,14 @@ jobs:
         include:
           - os: ubuntu-latest
             TARGET: linux-amd64
+            PYINSTALLER_OPTIONS: '--onefile, --name "keuzevakken", --windowed'
           - os: windows-latest
             TARGET: windows
+            PYINSTALLER_OPTIONS: '--onefile, --name "keuzevakken", --windowed'
+          - os: macos-latest
+            TARGET: macos-arm64
+            PYINSTALLER_OPTIONS: '--onefile, --name "keuzevakken"'
 
-#            ARTIFACT_NAME: hello_linux.zip
-#            ARTIFACT_PATH: './dist/hello-world/'
-#            ARTIFACT_MIME: application/zip
-#            CMD_ZIP: |
-#              (cd dist/hello-world && zip -r hello_linux.zip *)
-#          - os: macos-latest  # arm64
-#            TARGET: macos
-#            ARTIFACT_NAME: hello_macos.zip
-#            ARTIFACT_PATH: './dist/hello-world/'
-#            ARTIFACT_MIME: application/zip
-#            CMD_ZIP: |
-#              (cd dist/hello-world && zip -r hello_macos.zip *)
-#          - os: windows-latest
-#            TARGET: windows
-#            ARTIFACT_NAME: hello_windows.zip
-#            ARTIFACT_PATH: './'
-#            ARTIFACT_MIME: application/zip
-#            CMD_ZIP: |
-#              7z a hello_windows.zip .\dist\hello-world\*
     steps:
       - uses: actions/checkout@v4
 
@@ -74,7 +60,7 @@ jobs:
           python_ver: '3.12'
           spec: 'app.py'
           requirements: 'requirements.txt'
-          options: --onefile, --name "keuzevakken", --windowed
+          options: '${{ matrix.PYINSTALLER_OPTIONS }}'
 
       - name: List dist contents
         shell: bash
@@ -108,7 +94,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_release_details.outputs.upload_url }}
-          asset_name: keuzevakken.zip
+          asset_name: keuzevakken-${{ matrix.TARGET }}.zip
           asset_path: ./dist/keuzevakken.zip
           asset_content_type: application/zip
 
