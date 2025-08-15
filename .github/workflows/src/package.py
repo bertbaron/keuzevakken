@@ -33,7 +33,7 @@ def copy_examples(platform):
     """Copies the ./examples directory to the ./dist directory"""
 
     if platform == Platform.WINDOWS:
-        run_cmd(['xcopy', '/E', '/I', 'examples', 'dist'])
+        run_cmd(['xcopy', '/E', '/I', 'examples', 'dist\\examples'])
     else:
         run_cmd(['cp', '-r', 'examples', 'dist'])
 
@@ -44,7 +44,8 @@ def create_archive(platform):
     if platform == Platform.WINDOWS:
         run_cmd(['powershell', '-Command', 'Compress-Archive -Path .\\* -DestinationPath keuzevakken.zip'], cwd='dist')
     else:
-        if platform == Platform.MACOS and os.path.exists('dist/keuzevakken'):
+        # When building a .app for macOs, pyinstaller leaves the keuzevakken directory
+        if platform == Platform.MACOS and os.path.isdir('dist/keuzevakken'):
             run_cmd(['rm', '-rf', 'dist/keuzevakken'])
 
         run_cmd(['zip', '-r', f'keuzevakken.zip', '.'], cwd='dist')
