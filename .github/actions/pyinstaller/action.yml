@@ -62,6 +62,23 @@ runs:
       shell: bash
       run: python -m pip install pip wheel setuptools
 
+    # for debugging, print pyinstaller version
+    - name: (Print) PyInstaller version
+      shell: bash
+      run: |
+          echo "PyInstaller version: $(pyinstaller --version)"
+
+    # upgrade to latest pyinstaller version
+    - name: (Upgrade) PyInstaller
+      shell: bash
+      run: python -m pip install --upgrade pyinstaller
+
+    # for debugging, print pyinstaller version
+    - name: (Print) PyInstaller version
+      shell: bash
+      run: |
+          echo "PyInstaller version: $(pyinstaller --version)"
+
     - name: checks for inputs
       shell: bash
       run: python "${{ github.action_path }}/src/checks.py"
