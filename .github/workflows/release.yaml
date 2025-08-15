@@ -43,16 +43,16 @@ jobs:
         include:
           - os: ubuntu-latest
             TARGET: linux-amd64
-            PYINSTALLER_OPTIONS: '--onefile, --name "keuzevakken", --windowed'
+            PYINSTALLER_OPTIONS: '--onefile, --name "keuzevakken"'
           - os: windows-latest
             TARGET: windows
-            PYINSTALLER_OPTIONS: '--onefile, --name "keuzevakken", --windowed'
+            PYINSTALLER_OPTIONS: '--onefile, --name "keuzevakken"'
           - os: macos-14
             TARGET: macos-arm64
-            PYINSTALLER_OPTIONS: '--name "keuzevakken", --windowed'
+            PYINSTALLER_OPTIONS: '--onefile --name "keuzevakken"'
           - os: macos-13
             TARGET: macos-intel
-            PYINSTALLER_OPTIONS: '--name "keuzevakken", --windowed'
+            PYINSTALLER_OPTIONS: '--onefile --name "keuzevakken"'
 
     steps:
       - uses: actions/checkout@v4
