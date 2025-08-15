@@ -68,6 +68,8 @@ jobs:
 #            CMD_ZIP: |
 #              7z a hello_windows.zip .\dist\hello-world\*
     steps:
+      - uses: actions/checkout@v4
+
       - name: Create Executable
 #        uses: sayyid5416/pyinstaller@v1.2.0
         uses: ./.github/actions/pyinstaller
