@@ -14,6 +14,8 @@ jobs:
     name: Create empty release with tag name to later publish build artifacts via URL
     # needs: unit_test
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
 #      - name: Create empty release with tag name
 #        id: create_empty_release
