@@ -47,7 +47,7 @@ jobs:
           - os: windows-latest
             TARGET: windows
             PYINSTALLER_OPTIONS: '--onefile, --name "keuzevakken", --windowed'
-          - os: macos-13-xlarge
+          - os: macos-14
             TARGET: macos-arm64
             PYINSTALLER_OPTIONS: '--name "keuzevakken", --windowed'
           - os: macos-13
