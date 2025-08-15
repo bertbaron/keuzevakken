@@ -84,7 +84,7 @@ jobs:
           ls -l ./dist
 
       - name: Load previously uploaded release URL
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: release_url
 
