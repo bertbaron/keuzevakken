@@ -12,15 +12,25 @@ jobs:
 
   create_release:
     name: Create empty release with tag name to later publish build artifacts via URL
-#    needs: unit_test
+    # needs: unit_test
     runs-on: ubuntu-latest
     steps:
-      - name: Create empty release with tag name
-        id: create_empty_release
-        uses: marvinpinto/action-automatic-releases@v1.2.1
+#      - name: Create empty release with tag name
+#        id: create_empty_release
+#        uses: marvinpinto/action-automatic-releases@v1.2.1
+#        with:
+#          repo_token: ${{ secrets.GITHUB_TOKEN }}
+#          prerelease: false
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          draft: false
           prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Copy release URL for later uploads
         run: |
           echo "${{ steps.create_empty_release.outputs.upload_url }}" > release_url.txt
